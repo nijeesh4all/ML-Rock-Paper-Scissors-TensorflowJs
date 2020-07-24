@@ -7,21 +7,21 @@ async function App() {
     const show_count_down_timer = async (time) => {
 
         const div = document.createElement('div')
-            div.classList.add('flash-splash-message', 'background-primary')
+        div.classList.add('flash-splash-message', 'background-primary')
 
-            const h2 = document.createElement('h2')
-            h2.classList.add('text-primary')
-            div.appendChild(h2)
-            h2.innerText = "Ready"
+        const h2 = document.createElement('h2')
+        h2.classList.add('text-primary')
+        div.appendChild(h2)
+        h2.innerText = "Ready"
 
-            document.body.appendChild(div)
+        document.body.appendChild(div)
 
 
-            let count_down = time - 1
+        let count_down = time - 1
 
         return new Promise((resolve, reject) => {
 
-                const interval = setInterval(() => {
+            const interval = setInterval(() => {
                 h2.innerText = --count_down
                 if (count_down == 0) {
                     h2.innerText = 'Now'
@@ -54,7 +54,7 @@ async function App() {
     }
 
     const sleep = async (time) => {
-        return new Promise((resolve)=>{
+        return new Promise((resolve) => {
             setTimeout(resolve, 1000 * time)
         })
     }
@@ -66,16 +66,16 @@ async function App() {
     const $player_move_text = document.getElementById('player_move_text')
 
 
-    const show_move = (compuer_move, player_move)=>{
-        $computer_move_image.classList.remove('rock','paper','scissors');   
-        if(compuer_move.length !=0 ){   
-            $computer_move_image.classList.add(compuer_move);        
+    const show_move = (compuer_move, player_move) => {
+        $computer_move_image.classList.remove('rock', 'paper', 'scissors');
+        if (compuer_move.length != 0) {
+            $computer_move_image.classList.add(compuer_move);
         }
         $computer_move_text.innerText = compuer_move;
 
-        $player_move_image.classList.remove('rock','paper','scissors');  
-        if(player_move.length != 0){
-            $player_move_image.classList.add(player_move);        
+        $player_move_image.classList.remove('rock', 'paper', 'scissors');
+        if (player_move.length != 0) {
+            $player_move_image.classList.add(player_move);
         }
         $player_move_text.innerText = player_move;
     }
@@ -91,7 +91,6 @@ async function App() {
             show_move: show_move
         }
     });
-
 
 
     let game_timeout;
@@ -119,18 +118,18 @@ async function App() {
     changeStartingButtonState('Start Game')
 
 
-    const play_round = async ()=>{
-            await show_count_down_timer(5)
-        
-            const player_move = await playerMove()
+    const play_round = async () => {
+        await show_count_down_timer(5)
 
-            if(player_move == 'blank'){
-                show_message("Please Make a move");
-            } else {
-                game.play(player_move)
-            }
+        const player_move = await playerMove()
 
-            game_timeout = setTimeout(play_round, 1000)
+        if (player_move == 'blank') {
+            show_message("Please Make a move");
+        } else {
+            game.play(player_move)
+        }
+
+        game_timeout = setTimeout(play_round, 1000)
     }
 
 
@@ -150,18 +149,14 @@ async function App() {
         }
 
         window.requestAnimationFrame(render_scores)
-        
+
         await sleep(1);
 
-        show_move('','');
+        show_move('', '');
 
         play_round()
 
     })
-
-    
-
-
 
     $reset_game_button.addEventListener('click', () => {
         game.reset()
