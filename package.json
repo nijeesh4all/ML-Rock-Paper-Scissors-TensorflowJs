@@ -39,6 +39,7 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
+    "nanoevents": "^5.1.8",
     "papercss": "^1.6.1"
   }
 }

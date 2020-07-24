@@ -1,4 +1,6 @@
-module.exports = class Game {
+import { createNanoEvents } from 'nanoevents'
+
+export class Game {
 
     static WINNING_MOVES = {
         'paper': 'rock',
@@ -6,10 +8,15 @@ module.exports = class Game {
         'rock': 'scissors'
     }
 
+    emitter() {
+        return this._emitter();
+    }
+
     constructor(callbacks) {
         this.player_score = 0
         this.computer_score = 0
         this.callbacks = callbacks;
+        this._emitter = createNanoEvents()
     }
 
     /**
@@ -18,6 +25,8 @@ module.exports = class Game {
     reset() {
         this.player_score = 0
         this.computer_score = 0
+        this._emitter.emit("game:state:reset")
+        this._emitter.emit("game:state:changed", this.currentGameState())
     }
 
     /**
@@ -47,14 +56,20 @@ module.exports = class Game {
 
         if (win == 1) {
             this.player_score++
+            this._emitter.emit("game:result:player_won")
             this.callbacks.result.player()
         } else if (win == -1) {
             this.computer_score++
+            this._emitter.emit("game:result:computer_won")
             this.callbacks.result.computer()
         } else {
             this.callbacks.result.draw()
+            this._emitter.emit("game:result:draw")
         }
         this.callbacks.move.show_move(computer_move, player_move);
+        this._emitter.emit("game:move:computer", computer_move)
+        this._emitter.emit("game:move:player", player_move)
+        this._emitter.emit("game:state:changed", this.currentGameState())
         return win
     }
 
@@ -94,6 +109,16 @@ module.exports = class Game {
      */
     _getRandomInt() {
         return Math.floor(Math.random() * (3 - 1 + 1)) + 1;
+    }
+    /**
+     * return current game state
+     * @returns { { player_score: {Integer}, computer_score: {Integer} } }
+     */
+    currentGameState() {
+        return {
+            player_score: this.player_score,
+            computer_score: this.computer_score
+        }
     }
 
 }

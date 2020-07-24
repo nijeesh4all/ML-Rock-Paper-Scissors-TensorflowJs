@@ -3,7 +3,7 @@ const MODEL_URL = "https://teachablemachine.withgoogle.com/models/XL2BtQ2VQ/";
 let model, webcam, maxPredictions;
 
 // load the model and metadata
-async function loadModels(){
+async function loadModels() {
     const modelURL = MODEL_URL + "model.json";
     const metadataURL = MODEL_URL + "metadata.json";
 
@@ -16,12 +16,12 @@ async function loadModels(){
 }
 
 // Convenience function to setup a webcam
-async function setupWebcam(webcamContainer){
-    
+async function setupWebcam(webcamContainer) {
+
     const flip = true; // whether to flip the webcam
     webcam = new tmImage.Webcam(300, 300, flip); // width, height, flip
     await webcam.setup(); // request access to the webcam
-    
+
     await webcam.play();
 
     webcamContainer.appendChild(webcam.canvas);
@@ -43,18 +43,18 @@ async function predict() {
 }
 
 
-async function playerMove(){
+async function playerMove() {
     const moves_probability = await predict()
 
     console.table(moves_probability)
-    return moves_probability.sort((a,b)=> b.probability.toFixed(2) - a.probability.toFixed(2) )[0].className
+    return moves_probability.sort((a, b) => b.probability.toFixed(2) - a.probability.toFixed(2))[0].className
 }
 
 
 
-module.exports = {
-    init: init,
-    loadModels: loadModels,
-    setupWebcam: setupWebcam,
-    playerMove: playerMove
+export {
+    init,
+    loadModels,
+    setupWebcam,
+    playerMove
 }

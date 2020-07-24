@@ -1,9 +1,10 @@
 
-const { init, loadModels, setupWebcam, playerMove } = require('./detect')
-const Game = require('./game')
+import { init, loadModels, setupWebcam, playerMove } from './detect'
+import { Game } from './game'
 
 async function App() {
 
+    console.log("TEST");
     const show_count_down_timer = async (time) => {
 
         const div = document.createElement('div')
@@ -163,9 +164,6 @@ async function App() {
         clearTimeout(game_timeout);
     })
 
-
-
-
 }
 
-module.exports = App;
+export { App };
