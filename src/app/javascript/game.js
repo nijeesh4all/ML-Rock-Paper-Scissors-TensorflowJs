@@ -1,4 +1,4 @@
-import { createNanoEvents } from 'nanoevents'
+import { createNanoEvents, Emitter } from 'nanoevents'
 
 export class Game {
 
@@ -8,14 +8,9 @@ export class Game {
         'rock': 'scissors'
     }
 
-    emitter() {
-        return this._emitter();
-    }
-
-    constructor(callbacks) {
+    constructor() {
         this.player_score = 0
         this.computer_score = 0
-        this.callbacks = callbacks;
         this._emitter = createNanoEvents()
     }
 
@@ -57,18 +52,13 @@ export class Game {
         if (win == 1) {
             this.player_score++
             this._emitter.emit("game:result:player_won")
-            this.callbacks.result.player()
         } else if (win == -1) {
             this.computer_score++
             this._emitter.emit("game:result:computer_won")
-            this.callbacks.result.computer()
         } else {
-            this.callbacks.result.draw()
             this._emitter.emit("game:result:draw")
         }
-        this.callbacks.move.show_move(computer_move, player_move);
-        this._emitter.emit("game:move:computer", computer_move)
-        this._emitter.emit("game:move:player", player_move)
+        this._emitter.emit("game:moved", { computer_move, player_move })
         this._emitter.emit("game:state:changed", this.currentGameState())
         return win
     }
@@ -120,5 +110,21 @@ export class Game {
             computer_score: this.computer_score
         }
     }
+
+    /**
+     *  return an event emmiter
+     *  @returns { Emitter }
+     *  emiiter events 
+     *      1. game:state:reset -> when the game states are resetted
+     *      2. game:state:changed -> when the game state changes
+     *      3. game:result:player_won -> when the player wins
+     *      4. game:result:computer_won -> when the player wins
+     *      5. game:result:draw -> when match is a draw
+     *      6. game:moved -> when both players have made a move
+     */
+    emitter() {
+        return this._emitter;
+    }
+
 
 }
