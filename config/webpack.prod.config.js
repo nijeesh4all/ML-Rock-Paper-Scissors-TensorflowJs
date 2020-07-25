@@ -10,7 +10,6 @@ module.exports = merge(webpackBaseConfig, {
 
     minimizer: [
 
-      \
       new OptimizeCSSAssetsPlugin()
 
     ]
