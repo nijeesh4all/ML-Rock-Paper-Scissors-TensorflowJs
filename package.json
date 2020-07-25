@@ -1,10 +1,10 @@
 {
-  "name": "portfolio",
+  "name": "ml-rps",
   "version": "1.0.0",
   "description": "nijessh joshy's portfolio",
   "scripts": {
     "build:dev": "cross-env NODE_ENV=development webpack --mode development",
-    "build:prod": "cross-env NODE_ENV=production webpack --mode production; cd config/; node uncss.js",
+    "build:prod": "cross-env NODE_ENV=production webpack --mode production",
     "start": "webpack-dev-server --mode development"
   },
   "author": "Nijeesh Joshy",

@@ -1,4 +1,4 @@
-import { createNanoEvents, Emitter } from 'nanoevents'
+import { createNanoEvents, Emitter } from 'nanoevents';
 
 export class Game {
 

@@ -1,6 +1,6 @@
-import { show_count_down_timer, show_message, sleep } from './helpers'
-import { init, loadModels, setupWebcam, playerMove } from './detect'
-import { Game } from './game'
+import { show_count_down_timer, show_message, sleep } from './helpers';
+import { init, loadModels, setupWebcam, playerMove } from './detect';
+import { Game } from './game';
 
 async function App() {
 
